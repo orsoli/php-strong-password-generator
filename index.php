@@ -4,8 +4,7 @@ require_once __DIR__."/functions.php";
 
 if(isset($_GET["pswLen"]) && is_numeric($_GET["pswLen"])){
     session_start(); // Start session
-    $_SESSION['password'] = generatePsw($_GET["pswLen"]); // Added 'password' as key for our pasword generated as value
-    var_dump($_SESSION);
+    $_SESSION['password'] = generatePsw($_GET["pswLen"],$_GET["repeat"],$_GET["checkLetters"],$_GET["checkNumbers"],$_GET["checkSymbols"]);
 }else{
 
     var_dump("Invalid Inputs"); 
@@ -47,17 +46,58 @@ if(isset($_GET["pswLen"]) && is_numeric($_GET["pswLen"])){
         <!-- Receive pssw section  -->
         <section class="bg-info rounded-2 p-4">
             <?php if(isset($_SESSION) && !empty($_SESSION)){ ?>
-            <h5>Your generated Password is: <strong>"<?= $_SESSION['password'] ?></strong>"</h5>
+            <h5>Your generated Password is: <strong><i><?= $_SESSION['password'] ?></i></strong></h5>
             <?php }else{?>
             <h5>No valid parameters input</h5>
             <?php }?>
         </section>
         <!-- User inputs form  -->
         <form action="" method="get" class="bg-light rounded-2 p-4 my-4">
-            <div class="p-4">
-                <label for="pswLen" class="form-label">Password length: </label>
-                <input type="number" name="pswLen" id="pswLen" class="col-1">
+            <div class="d-flex justify-content-between p-4">
+                <div>
+                    <p>Password length:</p>
+                    <p>Allow repetition of one or more characters:</p>
+                </div>
+                <div>
+                    <!-- Password length  -->
+                    <div class="form">
+                        <input type="number" name="pswLen" id="pswLen" class="w-50 mb-3">
+                    </div>
+                    <!-- Radios form  -->
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="repeat" value="yes" id="repeat">
+                        <label class="form-check-label" for="repeat">
+                            Yes
+                        </label>
+                    </div>
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="radio" name="repeat" value="no" id="noRepeat" checked>
+                        <label class="form-check-label" for="noRepeat">
+                            No
+                        </label>
+                    </div>
+                    <!-- Check form  -->
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="checkLetters" id="checkLetters">
+                        <label class="form-check-label" for="checkLetters">
+                            Letters
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="checkNumbers" id="checkNumbers" checked>
+                        <label class="form-check-label" for="checkNumbers">
+                            Numbers
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="checkSymbols" id="checkSymbols">
+                        <label class="form-check-label" for="checkSymbols">
+                            Symbols
+                        </label>
+                    </div>
+                </div>
             </div>
+
             <div class="p-4">
                 <button type="submit" class="btn btn-primary">Send</button>
                 <button type="reset" class="btn btn-secondary">Reset</button>
