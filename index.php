@@ -1,5 +1,21 @@
 <?php
 
+//Define functions
+function generatePsw($length){
+    // Define a string with all charakters, nr or any simbols
+    $letters = 'abcdefghijklmnopqrstuvwxyz';
+    $number = '0123456789';
+
+    $allChars = $letters.$number;//Create a string contain required strings
+    
+    $randPsw = ''; // Store random letters to generate a password
+    for($i = 0; $i < $length; $i++){
+        $randNumber = random_int(0, strlen($allChars)) ;//Method to generate rand number from 0 to $allChars length
+        $randPsw .= $allChars[$randNumber]; // Add random character in rand psw
+    }
+    return $randPsw;
+}
+var_dump(generatePsw(10)) // Testing var_damp
 ?>
 
 <!DOCTYPE html>
@@ -22,13 +38,39 @@
         integrity='sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=='
         crossorigin='anonymous' referrerpolicy='no-referrer'>
 
+    <!-- Style  CSS -->
+    <link rel="stylesheet" href="./style.css">
+
 </head>
 
 <body>
     <!-- Container  -->
-    <div class='container mx-auto py-4'>
+    <main class='container mx-auto py-4'>
+        <!-- Title  -->
+        <div class="title text-center my-3">
+            <h1 class="text-light">Strong Password Generator</h1>
+        </div>
+        <!-- Receive pssw section  -->
+        <section class="bg-info rounded-2 p-4">
+            <?php if(isset($_GET["pswLen"]) && !empty($_GET["pswLen"])){?>
+            <h5>Your generated Password is: <strong><?= generatePsw($_GET["pswLen"])?></strong></h5>
+            <?php }else{?>
+            <h5>No valid parameters input</h5>
+            <?php }?>
+        </section>
+        <!-- User inputs form  -->
+        <form action="" method="get" class="bg-light rounded-2 p-4 my-4">
+            <div class="p-4">
+                <label for="pswLen" class="form-label">Password length: </label>
+                <input type="number" name="pswLen" id="pswLen" class="col-1">
+            </div>
+            <div class="p-4">
+                <button type="submit" class="btn btn-primary">Send</button>
+                <button type="reset" class="btn btn-secondary">Reset</button>
+            </div>
+        </form>
 
-    </div>
+    </main>
 </body>
 
 </html>
