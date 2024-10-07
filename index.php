@@ -1,5 +1,15 @@
 <?php
-require_once __DIR__."/functions.php"
+// Import files
+require_once __DIR__."/functions.php";
+
+if(isset($_GET["pswLen"]) && is_numeric($_GET["pswLen"])){
+    session_start(); // Start session
+    $_SESSION['password'] = generatePsw($_GET["pswLen"]); // Added 'password' as key for our pasword generated as value
+    var_dump($_SESSION);
+}else{
+
+    var_dump("Invalid Inputs"); 
+}
 ?>
 
 <!DOCTYPE html>
@@ -36,8 +46,8 @@ require_once __DIR__."/functions.php"
         </div>
         <!-- Receive pssw section  -->
         <section class="bg-info rounded-2 p-4">
-            <?php if(isset($_GET["pswLen"]) && !empty($_GET["pswLen"])){?>
-            <h5>Your generated Password is: <strong>"<?= generatePsw($_GET["pswLen"])?></strong>"</h5>
+            <?php if(isset($_SESSION) && !empty($_SESSION)){ ?>
+            <h5>Your generated Password is: <strong>"<?= $_SESSION['password'] ?></strong>"</h5>
             <?php }else{?>
             <h5>No valid parameters input</h5>
             <?php }?>
