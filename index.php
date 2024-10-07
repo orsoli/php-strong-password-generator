@@ -1,21 +1,5 @@
 <?php
-
-//Define functions
-function generatePsw($length){
-    // Define a string with all charakters, nr or any simbols
-    $letters = 'abcdefghijklmnopqrstuvwxyz';
-    $number = '0123456789';
-
-    $allChars = $letters.$number;//Create a string contain required strings
-    
-    $randPsw = ''; // Store random letters to generate a password
-    for($i = 0; $i < $length; $i++){
-        $randNumber = random_int(0, strlen($allChars)) ;//Method to generate rand number from 0 to $allChars length
-        $randPsw .= $allChars[$randNumber]; // Add random character in rand psw
-    }
-    return $randPsw;
-}
-var_dump(generatePsw(10)) // Testing var_damp
+require_once __DIR__."/functions.php"
 ?>
 
 <!DOCTYPE html>
@@ -53,7 +37,7 @@ var_dump(generatePsw(10)) // Testing var_damp
         <!-- Receive pssw section  -->
         <section class="bg-info rounded-2 p-4">
             <?php if(isset($_GET["pswLen"]) && !empty($_GET["pswLen"])){?>
-            <h5>Your generated Password is: <strong><?= generatePsw($_GET["pswLen"])?></strong></h5>
+            <h5>Your generated Password is: <strong>"<?= generatePsw($_GET["pswLen"])?></strong>"</h5>
             <?php }else{?>
             <h5>No valid parameters input</h5>
             <?php }?>
